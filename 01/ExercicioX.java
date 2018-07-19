@@ -36,10 +36,12 @@ public class ExercicioX {
         
         System.out.println("\n Desafio:");
         int fibA = 0;
-        for (int i = 1; i < 100; i++) {
-            System.out.println(fibA);
-            i = fibA + i;
-            fibA = i+1;
+        int fibB = 1;
+        System.out.println(fibA + " = " + fibA);
+        while (fibB < 10) {
+            System.out.println(fibB + " = " + fibB);
+            fibB = fibA + fibB;
+            fibA = fibB - fibA;
         }
     }
 }
