@@ -101,13 +101,14 @@ public class Conta {
         return dataAbertura;
     }
 
-    public void setDataAbertura(Data dataAbertura) {
-        if (dataAbertura.dia != 31 && dataAbertura.mes != 2)
-            this.dataAbertura = dataAbertura;
+    public void setDataAbertura(int dia, int mes, int ano) {
+        this.dataAbertura = new Data(dia, mes, ano);
     }
 
-
-    
+    public void setDataAbertura(String data) {
+        this.dataAbertura = new Data(data);
+    }
+   
 }
 
 class Data {
@@ -115,14 +116,32 @@ class Data {
     public int dia;
     public int mes;
     public int ano;
-
+    
     public Data(int dia, int mes, int ano) {
-        this.dia = dia;
-        this.mes = mes;
-        this.ano = ano;
+        valida(dia, mes, ano);
+    }
+
+    public Data(String data) {
+        String[] dma = data.split("/");
+        int dia = Integer.parseInt(dma[0]);
+        int mes = Integer.parseInt(dma[1]);
+        int ano = Integer.parseInt(dma[2]);
+        valida(dia, mes, ano);
+    }
+
+    public boolean valida(int dia, int mes, int ano){
+        if (dia != 31 && mes != 2){
+            this.dia = dia;
+            this.mes = mes;
+            this.ano = ano;
+            return true;
+        } else {
+            System.out.println("Data não existe");
+            return false;
+        }
     }
 
     public String toString(){
-        return this.dia+"/"+this.mes+"/"+this.ano;
+        return String.format("%02d", this.dia)+"/"+String.format("%02d", this.mes)+"/"+String.format("%04d", this.ano);
     }
 }

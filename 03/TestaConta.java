@@ -9,14 +9,14 @@ public class TestaConta {
         Conta conta1 = new Conta("Thais Andre",100.0);
         conta1.setAgencia("1234-4");
         conta1.setNumero(578757);
-        conta1.setDataAbertura(new Data(27, 06, 2001));
+        conta1.setDataAbertura("27/06/2001");
 
         Conta conta2 = new Conta();
         conta2.setTitular("Daniel Lima");
         conta2.setAgencia("3694-8");
         conta2.setNumero(5454);
-        conta2.setDataAbertura(new Data(13, 5, 1998));
-        conta2.setDataAbertura(new Data(31, 2, 1998));
+        conta2.setDataAbertura(13, 5, 1998);
+        conta2.setDataAbertura(31, 2, 1998);
 
         conta1.recuperaDadosParaImpressao();
         conta2.recuperaDadosParaImpressao();
