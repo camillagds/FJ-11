@@ -1,3 +1,4 @@
+package br.com.caelum.contas.modelo;
 
 public class Conta {
 	private String agencia;
@@ -8,6 +9,10 @@ public class Conta {
 	public Conta(double saldo) {
 		super();
 		this.saldo = saldo;
+	}
+
+	public Conta() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public void depositar(double valor) {
