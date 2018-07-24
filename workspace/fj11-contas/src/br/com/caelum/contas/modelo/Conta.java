@@ -3,7 +3,7 @@ package br.com.caelum.contas.modelo;
 public class Conta {
 	private String agencia;
 	private int numero;
-	private double saldo;
+	protected double saldo;
 	private String titular;
 
 	public Conta(double saldo) {
@@ -14,6 +14,10 @@ public class Conta {
 	public Conta() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public String getTipo() {
+		return "Conta";
+	}
 
 	public void depositar(double valor) {
 		this.saldo += valor;
@@ -21,6 +25,11 @@ public class Conta {
 	
 	public void sacar(double valor) {
 		this.saldo -= valor;
+	}
+	
+	public void transfere(double valor, Conta conta) {
+		this.sacar(valor);
+		conta.depositar(valor);
 	}
 
 	public String getAgencia() {
