@@ -1,6 +1,6 @@
 package br.com.caelum.contas.modelo;
 
-public class Conta {
+public abstract class Conta {
 	private String agencia;
 	private int numero;
 	protected double saldo;
@@ -15,9 +15,7 @@ public class Conta {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public String getTipo() {
-		return "Conta";
-	}
+	public abstract String getTipo();
 
 	public void depositar(double valor) {
 		this.saldo += valor;
@@ -32,6 +30,15 @@ public class Conta {
 		conta.depositar(valor);
 	}
 
+    public void recuperaDadosParaImpressao() {
+        System.out.println("-------------------------\n    Extrato   \n-------------------------");
+        System.out.println("Agencia: " + this.agencia);
+        System.out.println("N. Conta: " + this.numero);
+        System.out.println("Tipo = " + this.getTipo());
+        System.out.println("-------------------------");
+        System.out.println("Saldo = " + this.saldo);
+    }
+	
 	public String getAgencia() {
 		return agencia;
 	}
