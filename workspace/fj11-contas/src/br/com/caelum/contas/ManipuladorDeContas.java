@@ -1,4 +1,5 @@
 package br.com.caelum.contas;
+import br.com.caelum.contas.exception.SaldoInsuficienteException;
 import br.com.caelum.contas.modelo.Conta;
 import br.com.caelum.contas.modelo.ContaCorrente;
 import br.com.caelum.contas.modelo.ContaPoupanca;
@@ -25,12 +26,12 @@ public class ManipuladorDeContas {
 		this.conta.depositar(valorDigitado);
 	}
 	
-	public void saca(Evento evento){
+	public void saca(Evento evento) throws SaldoInsuficienteException{
 		double valor = evento.getDouble("valorOperacao");
 		this.conta.sacar(valor);
 	}
 	
-	public void transfere(Evento evento) {
+	public void transfere(Evento evento) throws SaldoInsuficienteException {
 		Conta destino = (Conta) evento.getSelecionadoNoCombo("destino");
 		conta.transfere(evento.getDouble("valorTransferencia"), destino);
 	}

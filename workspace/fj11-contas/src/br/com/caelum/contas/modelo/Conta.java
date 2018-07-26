@@ -1,5 +1,7 @@
 package br.com.caelum.contas.modelo;
 
+import br.com.caelum.contas.exception.SaldoInsuficienteException;
+
 public abstract class Conta {
 	private String agencia;
 	private int numero;
@@ -12,33 +14,60 @@ public abstract class Conta {
 	}
 
 	public Conta() {
-		// TODO Auto-generated constructor stub
 	}
-	
-	public abstract String getTipo();
 
-	public void depositar(double valor) {
-		this.saldo += valor;
+	public abstract String getTipo();
+	
+	@Override
+	public String toString() {
+		return "[ag " + agencia + " | cnt " + numero + "] " + titular.toUpperCase();
+		
 	}
 	
-	public void sacar(double valor) {
-		this.saldo -= valor;
+	@Override
+	public boolean equals(Object obj){
+		if (obj == null) {
+			return false;
+		}
+		Conta outraConta = (Conta) obj;
+		
+		return this.numero == outraConta.numero
+				&& this.agencia.equals(outraConta.agencia);
 	}
-	
-	public void transfere(double valor, Conta conta) {
+
+    public boolean sacar(double valorSaque) throws SaldoInsuficienteException {
+        if (valorSaque < this.saldo) {
+            return false;
+        } else {
+            this.saldo -= valorSaque;
+            return true;  
+        }
+    }
+
+    public boolean depositar(double valorDeposito) {
+        if (valorDeposito <= 0) {
+            throw new IllegalArgumentException("Você tentou depositar um valor negativo");
+        } else {
+            this.saldo += valorDeposito; 
+            return true; 
+        }
+    }
+
+
+	public void transfere(double valor, Conta conta) throws SaldoInsuficienteException {
 		this.sacar(valor);
 		conta.depositar(valor);
 	}
 
-    public void recuperaDadosParaImpressao() {
-        System.out.println("-------------------------\n    Extrato   \n-------------------------");
-        System.out.println("Agencia: " + this.agencia);
-        System.out.println("N. Conta: " + this.numero);
-        System.out.println("Tipo = " + this.getTipo());
-        System.out.println("-------------------------");
-        System.out.println("Saldo = " + this.saldo);
-    }
-	
+	public void recuperaDadosParaImpressao() {
+		System.out.println("-------------------------\n    Extrato   \n-------------------------");
+		System.out.println("Agencia: " + this.agencia);
+		System.out.println("N. Conta: " + this.numero);
+		System.out.println("Tipo = " + this.getTipo());
+		System.out.println("-------------------------");
+		System.out.println("Saldo = " + this.saldo);
+	}
+
 	public String getAgencia() {
 		return agencia;
 	}
