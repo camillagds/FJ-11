@@ -2,7 +2,7 @@ package br.com.caelum.contas.modelo;
 
 import br.com.caelum.contas.exception.SaldoInsuficienteException;
 
-public abstract class Conta {
+public abstract class Conta implements Comparable<Conta> {
 	private String agencia;
 	private int numero;
 	protected double saldo;
@@ -16,43 +16,47 @@ public abstract class Conta {
 	public Conta() {
 	}
 
-	public abstract String getTipo();
-	
+	@Override
+	public int compareTo(Conta outraConta) {
+		return this.titular.compareTo(outraConta.titular);
+
+	}
+
 	@Override
 	public String toString() {
 		return "[ag " + agencia + " | cnt " + numero + "] " + titular.toUpperCase();
-		
+
 	}
-	
+
 	@Override
-	public boolean equals(Object obj){
+	public boolean equals(Object obj) {
 		if (obj == null) {
 			return false;
 		}
 		Conta outraConta = (Conta) obj;
-		
-		return this.numero == outraConta.numero
-				&& this.agencia.equals(outraConta.agencia);
+
+		return this.numero == outraConta.numero && this.agencia.equals(outraConta.agencia);
 	}
 
-    public boolean sacar(double valorSaque) throws SaldoInsuficienteException {
-        if (valorSaque < this.saldo) {
-            return false;
-        } else {
-            this.saldo -= valorSaque;
-            return true;  
-        }
-    }
+	public abstract String getTipo();
 
-    public boolean depositar(double valorDeposito) {
-        if (valorDeposito <= 0) {
-            throw new IllegalArgumentException("Você tentou depositar um valor negativo");
-        } else {
-            this.saldo += valorDeposito; 
-            return true; 
-        }
-    }
+	public boolean sacar(double valorSaque) throws SaldoInsuficienteException {
+		if (valorSaque < this.saldo) {
+			return false;
+		} else {
+			this.saldo -= valorSaque;
+			return true;
+		}
+	}
 
+	public boolean depositar(double valorDeposito) {
+		if (valorDeposito < 0) {
+			throw new IllegalArgumentException("Você tentou depositar um valor negativo");
+		} else {
+			this.saldo += valorDeposito;
+			return true;
+		}
+	}
 
 	public void transfere(double valor, Conta conta) throws SaldoInsuficienteException {
 		this.sacar(valor);
