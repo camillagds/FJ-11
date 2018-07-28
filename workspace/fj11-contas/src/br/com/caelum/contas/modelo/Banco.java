@@ -1,25 +1,36 @@
 package br.com.caelum.contas.modelo;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
 public class Banco {
 	private String nome;
 	private int numero;
-	private Conta[] contas;
+	private Map<String, Conta> contas;
 	
 	public Banco(String nome, int numero){
 		this.nome = nome;
 		this.numero = numero;
-		this.contas = new ContaCorrente[10];
+		this.contas = new HashMap<>();
 	}
 	
 	public boolean adiciona(Conta conta) {
-		for (int i = 0; i < contas.length; i++) {
-			if (contas[i] == null ){
-				contas[i] = conta;
-				return true;
-			}
+		if (contas.containsValue(conta)){
+			System.out.println("Conta ja existe!");
+			return false;
 		}
-		System.out.println("Limite de contas atingido");
-		return false;
+		contas.put(conta.getTitular(), conta);
+		return true;
+	}
+	
+	public int pegaQuantidadeDeContas() {
+		return contas.size();
+	}
+	
+	public Conta buscaPorTitular(String nome) {
+		return contas.get(nome);
 	}
 
 	public String getNome() {
@@ -31,10 +42,9 @@ public class Banco {
 	}
 
 	public void mostraContas() {
-		for (int i = 0; i < contas.length; i++) {
-			System.out.println("Conta na posição " + i + ":");
-			contas[i].recuperaDadosParaImpressao();
-		}
+		for (Conta conta : contas.values()) {
+	        conta.recuperaDadosParaImpressao();
+	    }
 	}
 	
 }

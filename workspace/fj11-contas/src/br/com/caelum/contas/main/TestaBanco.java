@@ -16,9 +16,9 @@ public class TestaBanco {
 		for (int i = 0; i < 10; i++) {
 			ContaCorrente c1 = new ContaCorrente();
 			c1.setAgencia("1");
-			c1.setNumero(1234 + i);
+			c1.setNumero(1234);
 			c1.setTitular("Pessoa" + i);
-			c1.depositar(random.nextInt());
+			c1.depositar(random.nextInt(1000));
 			banco.adiciona(c1);
 		}
 		
